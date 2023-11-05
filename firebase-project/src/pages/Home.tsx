@@ -37,7 +37,7 @@ const Home = () => {
     await addDoc(posts, {
       id: user?.uid,
       post: data?.post,
-      user: user.displayName,
+      user: user?.displayName,
     });
 
     set_made_post(data?.post);

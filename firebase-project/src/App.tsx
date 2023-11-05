@@ -1,6 +1,7 @@
-import { useState, createContext } from 'react'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
-import { AuthStateHook, useAuthState, User } from 'react-firebase-hooks/auth'
+import { createContext } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { User } from 'firebase/auth'
 import { auth } from './config/firebase'
 
 import './assets/css/App.css'
@@ -19,7 +20,6 @@ export const AppContext = createContext<app_context_type | null>(null);
 
 const App = () => {
   const [user] = useAuthState(auth);
-
   return (
     <AppContext.Provider value={{user}}>
       <BrowserRouter>
