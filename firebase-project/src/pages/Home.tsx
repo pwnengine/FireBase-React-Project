@@ -1,5 +1,5 @@
-import React, { useContext, useState, useEffect } from 'react'
-import { auth, db } from '../config/firebase'
+import { useContext, useState, useEffect } from 'react'
+import { db } from '../config/firebase'
 import { app_context_type, AppContext } from '../App'
 import { getDocs, addDoc, collection } from 'firebase/firestore'
 import { useForm, FieldValues } from 'react-hook-form'
