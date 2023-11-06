@@ -7,19 +7,20 @@ import { getFirestore } from 'firebase/firestore'
 
 // Your web app's Firebase configuration
 const config = {
-  apiKey: import.meta.env.VITE_API_KEY,
+  apiKey: "AIzaSyBWj13euEzPrlI5C5N5wNe7K6gU9OCvFZI",
 
-  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  authDomain: "swagproject-a234b.firebaseapp.com",
 
-  projectId: import.meta.env.VITE_PROJECT_ID,
+  projectId: "swagproject-a234b",
 
-  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  storageBucket: "swagproject-a234b.appspot.com",
 
-  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  messagingSenderId: "527479092457",
 
-  appId: import.meta.env.VITE_APP_ID,
+  appId: "1:527479092457:web:b5ba9ae3e3804d9964ec78"
 
-  measurementId: import.meta.env.VITE_MEASUREMENT_ID,
+
+ // measurementId: import.meta.env.VITE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase

@@ -3,12 +3,14 @@ import { db } from '../config/firebase'
 import { app_context_type, AppContext } from '../App'
 import { getDocs, addDoc, collection } from 'firebase/firestore'
 import { useForm, FieldValues } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
 interface i_post_data {
   uid: string;
   pid: string;
   post: string;
   user: string;
+  likes: number;
 }
 
 const Home = () => {
@@ -16,9 +18,6 @@ const Home = () => {
 
   const [ posts_state, set_posts_state ] = useState<i_post_data[] | null>(null);
   const [ made_post, set_made_post ] = useState('');
-
-  const posts = collection(db, 'posts');
-  const likes = collection(db, 'likes');
 
   /*
   const do_db = () => {
@@ -59,18 +58,25 @@ const Home = () => {
     return `${curr_uid}${built_pid}`;
   }
 */
+  const nav = useNavigate();
   const handle_click = async (data: FieldValues) => {
-    await addDoc(posts, {
-      uid: user?.uid,
-      pid: user?.uid,
-      post: data?.post,
-      user: user?.displayName,
-    });
+    if(!user) {
+      nav('/login');
+    } else {
+      const posts = collection(db, 'posts');
+      await addDoc(posts, {
+        uid: user?.uid,
+        pid: user?.uid,
+        post: data?.post,
+        user: user?.displayName,
+      });
 
-    set_made_post(data?.post);
+      set_made_post(data?.post);
+    }
   };
 
   const handle_like = (pid: string) => {
+    const likes = collection(db, 'likes');
     addDoc(likes, {
       user_id: user?.uid,
       post_id: pid,
@@ -79,24 +85,39 @@ const Home = () => {
 
   const { register, handleSubmit } = useForm({});
 
-
   useEffect(() => {
-    //set_posts_state(null); //take this out so it doesn't visbly refresh
-    //do_db();
+    const likes = collection(db, 'likes');
+    const get_like_cnt = async (tmp_pid: string): Promise<number> => {
+      let cnt = 0;
+  
+      const likes_docs = await getDocs(likes);
+      likes_docs.docs.forEach((value) => {
+        if(value.get('post_id') === tmp_pid) {
+          //console.log('it hit');
+          cnt++;
+        }
+      });
+  
+      return cnt
+    };
 
+    const posts = collection(db, 'posts');
+    console.log('IS READING!');
     const docs = getDocs(posts);
 
     const holder: i_post_data[] = [];
     docs.then((data) => {
       data.docs.forEach((val) => {
-        holder.push({post: val.get('post'), user: val.get('user'), uid: val.get('uid'), pid: val.get('pid')});
-    });
+        const tmp_pid = val.get('pid');
+        get_like_cnt(tmp_pid).then((cnt) => {
+          holder.push({post: val.get('post'), user: val.get('user'), uid: val.get('uid'), pid: val.get('pid'), likes: cnt});
+          set_posts_state(holder);
+        });
+      });
     }).catch((err) => {
       console.log(err);
-    }).finally(() => {
-      set_posts_state(holder);
-    });
-  }, [made_post, posts]);
+    })
+  }, [made_post]);
 
   return (
     <>
@@ -114,7 +135,7 @@ const Home = () => {
               <div className="post-block" key={Math.random()}>
                 <h3 className="post-user">@{val.user}</h3>
                 <p className="post-date">(11/04/23)</p>
-                <button onClick={() => handle_like(val.pid)} className="post-like-btn">🔥</button>
+                <button onClick={() => handle_like(val.pid)} className="post-like-btn">🔥{val.likes}</button>
                 <button className="post-dislike-btn">💩</button>
                 <p key={Math.random()} className="post-text">{val.post}</p>
                 
@@ -154,11 +175,12 @@ const Home = () => {
 
       <div className="post-form-container">
         <form onSubmit={handleSubmit(handle_click)}>
-          <input className="post-form-input" type="text" placeholder="What's on your mind?" {...register('post')} />
+          <input className="post-form-input" type="text" placeholder="What's on your mind?" {...register('post')} onKeyDown={(e) => {
+            if(e.key === 'Enter') 
+              e.currentTarget.value = '';
+          }} />
           <button className="post-form-submit" type="submit">post</button>  
         </form>
-
-        
       </div>
     </>
   )

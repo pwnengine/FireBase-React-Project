@@ -2,12 +2,15 @@ import { useContext } from 'react'
 import { signOut } from 'firebase/auth'
 import { app_context_type, AppContext } from '../App'
 import { auth } from '../config/firebase'
+import { useNavigate } from 'react-router-dom'
 
 const Profile = () => {
   const { user } = useContext(AppContext) as app_context_type;
+  const nav = useNavigate();
 
   const sign_out = async () => {
     await signOut(auth);
+    nav('/');
   };
 
   if(!user) {
