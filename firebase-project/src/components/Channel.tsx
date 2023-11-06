@@ -9,6 +9,7 @@ import { useRandom } from '../hooks/useRandom'
 interface props {
   photo_url: string;
   channel_name: string;
+  channel_id: string;
 }
 
 interface i_post_data {
@@ -20,7 +21,7 @@ interface i_post_data {
   dislikes: number;
 }
 
-const Channel = ({ photo_url, channel_name }: props) => {
+const Channel = ({ photo_url, channel_name, channel_id }: props) => {
   const { user } = useContext(AppContext) as app_context_type;
 
   const [ posts_state, set_posts_state ] = useState<i_post_data[] | null>(null);
@@ -37,7 +38,7 @@ const Channel = ({ photo_url, channel_name }: props) => {
     if(!user) {
       nav('/login');
     } else {
-      const posts = collection(db, 'posts');
+      const posts = collection(db, `${channel_id}_posts`);
       await addDoc(posts, {
         uid: user?.uid,
         pid: `${user?.uid}${random_post_id}`,
@@ -50,7 +51,7 @@ const Channel = ({ photo_url, channel_name }: props) => {
   };
 
   const handle_like = (pid: string) => {
-    const likes = collection(db, 'likes');
+    const likes = collection(db, `${channel_id}_likes`);
     addDoc(likes, {
       user_id: user?.uid,
       post_id: pid,
@@ -60,7 +61,7 @@ const Channel = ({ photo_url, channel_name }: props) => {
   };
 
   const handle_dislike = (pid: string) => {
-    const dislikes = collection(db, 'dislikes');
+    const dislikes = collection(db, `${channel_id}_dislikes`);
     addDoc(dislikes, {
       user_id: user?.uid,
       post_id: pid,
@@ -77,8 +78,8 @@ const Channel = ({ photo_url, channel_name }: props) => {
   }
 
   useEffect(() => {
-    const likes = collection(db, 'likes');
-    const dislikes = collection(db, 'dislikes');
+    const likes = collection(db, `${channel_id}_likes`);
+    const dislikes = collection(db, `${channel_id}_dislikes`);
     const get_reaction_cnt = async (tmp_pid: string): Promise<i_cnt> => {
       const cnt = {
         likes: 0,
@@ -102,7 +103,7 @@ const Channel = ({ photo_url, channel_name }: props) => {
       return cnt
     };
 
-    const posts = collection(db, 'posts');
+    const posts = collection(db, `${channel_id}_posts`);
     console.log('IS READING!');
     const docs = getDocs(posts);
 
@@ -144,34 +145,6 @@ const Channel = ({ photo_url, channel_name }: props) => {
            );
           })
         }
-      </div>
-
-      <div className="schedule-container">
-        <h2>
-          Schedule
-        </h2>
-
-        <div className="scheduled-events">
-        <button className="event">Add</button>
-        <button className="event">Dummy Event 1</button>
-        <button className="event">Dummy Event 2</button>
-        <button className="event">Dummy Event 2</button>
-        <button className="event">Dummy Event 2</button>
-        <button className="event">Dummy Event 2</button>
-        <button className="event">Dummy Event 2</button>
-        <button className="event">Dummy Event 2</button>
-        <button className="event">Dummy Event 2</button>
-        <button className="event">Dummy Event 2</button>
-        <button className="event">Dummy Event 2</button>
-        <button className="event">Dummy Event 2</button>
-        <button className="event">Dummy Event 2</button>
-        <button className="event">Dummy Event 2</button>
-        <button className="event">Dummy Event 2</button>
-        <button className="event">Dummy Event 2</button>
-        <button className="event">Dummy Event 2</button>
-        <button className="event">Dummy Event 2</button>
-        <button className="event">Dummy Event 2</button>
-        </div>
       </div>
 
       <div className="post-form-container">

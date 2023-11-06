@@ -65,7 +65,7 @@ const App = () => {
           {
             channel_list.map((val) => {
               return (
-                <Route key={val.channel_id} path={val.channel_id} element={<Channel channel_name={val.channel_name} photo_url={val.channel_img} />} />
+                <Route key={val.channel_id} path={val.channel_id} element={<Channel channel_name={val.channel_name} photo_url={val.channel_img} channel_id={val.channel_id} />} />
               );
             })
           }
