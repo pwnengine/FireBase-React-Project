@@ -9,7 +9,7 @@
   position: fixed;
   left: 0px;
   top: 0px;
-  background-color: rgb(39, 39, 39);
+  background-color: hsl(0, 1%, 17%);
   width: 100%;
   padding-top: 10px;
   padding-bottom: 1px;
@@ -73,7 +73,7 @@
   position: absolute;
   right: 0px;
   top: 50px;
-  background-color: hsl(0, 1%, 17%);
+  background-color: hsl(0, 3%, 20%);
   height: 100%;
   padding: 15px;
   max-width: 250px;
@@ -96,7 +96,7 @@
   position: fixed;
   left: 0px;
   top: 50px;
-  background-color: hsl(0, 1%, 17%);
+  background-color: hsl(0, 3%, 20%);
   height: 100%;
   padding: 15px;
   max-width: 400px;
@@ -201,3 +201,5 @@
 .read-the-docs {
   color: #888;
 }
+
+

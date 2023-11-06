@@ -1,0 +1,67 @@
+.channels-container {
+  background-color: hsl(0, 1%, 17%);
+  
+  border-radius: 20px;
+  margin-top: 100px;
+  width: 300px;
+  padding: 10px 50px 50px 50px;
+  position: absolute;
+  left: 50%;
+  
+  transform: translateX(-50%);
+ 
+}
+
+.add-channel-btn {
+  display: inline;
+  width: 10px;
+  border-radius: 350px;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background-color:#252424;
+  position: relative;
+  left: 176px;
+  bottom: 87px;
+  margin-bottom: 40px;
+  padding-right: 30px;
+  border-width: 1px;
+  padding-bottom: 20px;
+}
+.add-channel-btn:hover {
+  border: groove;
+  border-width: 3px;
+}
+.add-channel-btn:focus {
+ 
+  border:groove;
+  border-width: 3px;
+}
+
+.channels {
+  width: 95%;
+  margin-top: 10px;
+}
+
+.create-channel-btn {
+  width: 95%;
+  margin-top: 15px;
+}
+
+.create-channel-input {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+
+  width: 81%;
+  margin-top: 5px;
+  text-align: center;
+  margin-bottom: 70px;
+  margin-top: 70px;
+}
