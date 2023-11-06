@@ -26,7 +26,7 @@ const Channel = ({ photo_url, channel_name, channel_id }: props) => {
 
   const [ posts_state, set_posts_state ] = useState<i_post_data[] | null>(null);
   const [ made_post, set_made_post ] = useState('');
-  const [ total_likes, set_total_likes ] = useState(0);
+  //const [ total_likes, set_total_likes ] = useState(0);
   const [ made_like, set_made_like ] = useState('');
   const [ made_dislike, set_made_dislike ] = useState('');
   
@@ -119,7 +119,7 @@ const Channel = ({ photo_url, channel_name, channel_id }: props) => {
     }).catch((err) => {
       console.log(err);
     })
-  }, [made_post, made_like, made_dislike]);
+  }, [made_post, made_like, made_dislike, channel_id]);
 
   return (
     <>
